@@ -16,6 +16,8 @@ class Game_Channel_Bot:
     logging.getLogger('apscheduler').setLevel(logging.DEBUG)
     sched = AsyncIOScheduler()
     client = discord.Client()
+
+    # Get games on script startup
     date = datetime.datetime.today()
     parameter = date.strftime('%Y%m%d')
     parameter = str(20180928) # This line is for testing purposes. Date is set to first day of preseason
@@ -31,10 +33,16 @@ class Game_Channel_Bot:
             gameDetails['created_channel'] = False
             #print(gameDetails)
             games.append(gameDetails)
-    print(games)
+
+
+    # Method to update games daily
     async def update_games_daily(self):
         for game in self.games:
-            game['channel'].delete()
+            try:
+                game['channel'].delete()
+            except Exception as e:
+                print(e)
+                pass
         date = datetime.datetime.today()
         parameter = date.strftime('%Y%m%d')
         parameter = str(20180928) # This line is for testing purposes. Date is set to first day of preseason
@@ -50,6 +58,8 @@ class Game_Channel_Bot:
                 gameDetails['created_channel'] = False
                 #print(gameDetails)
                 self.games.append(gameDetails)
+
+    # Creates game thread channels
     async def create_game_threads(self):
         for game in self.games:
             # If it's one hour before the game and we haven't created a channel yet
@@ -59,6 +69,8 @@ class Game_Channel_Bot:
             category = self.client.get_guild(self.category_id)
             channel = await guild.create_text_channel(game['away']+'-at-'+game['home'], category)
             game['channel'] = channel
+
+    # Init - Adds jobs to scheduler
     def __init__(self):
         self.sched.add_job(self.update_games_daily, 'cron', hour=1)
         self.sched.add_job(self.create_game_threads, 'interval', minutes=1)
