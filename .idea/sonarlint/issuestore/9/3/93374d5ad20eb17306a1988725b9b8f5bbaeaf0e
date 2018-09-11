@@ -1,0 +1,4 @@
+
+ypython:S117."\Rename this local variable "gameDetails" to match the regular expression ^[_a-z][a-z0-9_]*$.(öÅ“$8µÆ¾¼Ü,
+ppython:S116"SRename this field "gameDetails" to match the regular expression ^[_a-z][_a-z0-9]*$.(öÅ“$8ÈÙÆ¼Ü,
+xpython:S101"URename class "Game_Channel_Bot" to match the regular expression ^[A-Z_][a-zA-Z0-9]+$.(ºÚ‰ðøÿÿÿÿ8ÈÙÆ¼Ü,
