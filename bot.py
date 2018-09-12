@@ -66,7 +66,7 @@ class Game_Channel_Bot:
             if (datetime.datetime.now() + datetime.timedelta(hours=1)).time() > game['time'] and game['created_channel'] == False:
                 game['created_channel'] = True
             guild = self.client.get_guild(self.server_id)
-            category = self.client.get_guild(self.category_id)
+            category = self.client.get_channel(self.category_id)
             channel = await guild.create_text_channel(game['away']+'-at-'+game['home'], category)
             game['channel'] = channel
 
